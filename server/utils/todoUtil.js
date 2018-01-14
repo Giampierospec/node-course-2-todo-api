@@ -1,5 +1,7 @@
 var {Todo} = require('../models/todo');
-
+/**
+ * function that returns CRUD operations in todos
+ */
 var TodoUtil = (()=>{
     var createTodo = (body, callback)=>{
         if(typeof body === 'object'){
