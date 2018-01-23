@@ -5,6 +5,7 @@ var todoRoute = express.Router();
 todoRoute.route('/')
     .post(TodoCtrl.postTodos)
     .get(TodoCtrl.getTodos);
-
+todoRoute.route('/:id')
+         .get(TodoCtrl.getTodo);
 
 module.exports = {todoRoute};

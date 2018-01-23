@@ -1,4 +1,5 @@
 var {TodoUtil} = require('../utils/todoUtil');
+var {ObjectID} = require('mongodb');
 var TodoCtrl = (function(){
     var getTodos = (req, res) =>{
         TodoUtil.getTodos((err, todos)=>{
@@ -18,10 +19,25 @@ var TodoCtrl = (function(){
         }
        });
     };
-
+var getTodo = (req, res, next)=>{
+    var id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send();
+    }
+    
+    TodoUtil.findTodo(id,(err, todo)=>{
+        if(!todo)
+        res.status(404).send();
+        if(todo)
+         res.json(todo);
+         if(err)
+          res.status(400).send();
+    });
+};
     return {
         postTodos,
-        getTodos
+        getTodos,
+        getTodo
     };
 })();
 
