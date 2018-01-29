@@ -5,7 +5,7 @@ var {Todo} = require('../models/todo');
 var TodoUtil = (()=>{
     var getTodos = (callback)=>{
         Todo.find({}).then((todos)=>{
-            callback(null, {todos});
+            callback(null, todos);
         }, (err)=>{
             callback(err);
         });
@@ -29,14 +29,14 @@ var TodoUtil = (()=>{
 
     var findTodo = (id, callback)=>{
             Todo.findById(id).then((todo)=>{
-                callback(null,{todo});
+                callback(null,todo);
             },(err)=>{
                 callback(err);
             });
     };
     var deleteTodo = (id, callback) =>{
         Todo.findByIdAndRemove(id).then((todo)=>{
-            callback(null, {todo});
+            callback(null, todo);
         }, (err)=>{
             callback(err);
         });

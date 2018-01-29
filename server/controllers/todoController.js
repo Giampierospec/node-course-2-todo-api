@@ -29,7 +29,7 @@ var TodoCtrl = (function(){
              return res.status(404).send();
              if(err)
               return res.status(400).send();
-            return res.json(todo);
+            return res.json({todo});
         });
     };
 var getTodo = (req, res, next)=>{
@@ -42,7 +42,7 @@ var getTodo = (req, res, next)=>{
         if(!todo)
         res.status(404).send();
         if(todo)
-         res.json(todo);
+         res.json({todo});
          if(err)
           res.status(400).send();
     });
