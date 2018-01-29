@@ -34,10 +34,18 @@ var TodoUtil = (()=>{
                 callback(err);
             });
     };
+    var deleteTodo = (id, callback) =>{
+        Todo.findByIdAndRemove(id).then((todo)=>{
+            callback(null, {todo});
+        }, (err)=>{
+            callback(err);
+        });
+    };
     return {
         createTodo,
         getTodos,
-        findTodo
+        findTodo,
+        deleteTodo
     };
 })();
 

@@ -6,6 +6,7 @@ todoRoute.route('/')
     .post(TodoCtrl.postTodos)
     .get(TodoCtrl.getTodos);
 todoRoute.route('/:id')
-         .get(TodoCtrl.getTodo);
+         .get(TodoCtrl.getTodo)
+         .delete(TodoCtrl.deleteTodo);
 
 module.exports = {todoRoute};

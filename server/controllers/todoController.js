@@ -19,6 +19,19 @@ var TodoCtrl = (function(){
         }
        });
     };
+    var deleteTodo = (req, res, next)=>{
+        var id = req.params.id;
+        if(!ObjectID.isValid(id)){
+            return res.status(404).send();
+        }
+        TodoUtil.deleteTodo(id,(err,todo)=>{
+            if(!todo)
+             return res.status(404).send();
+             if(err)
+              return res.status(400).send();
+            return res.json(todo);
+        });
+    };
 var getTodo = (req, res, next)=>{
     var id = req.params.id;
     if(!ObjectID.isValid(id)){
@@ -37,7 +50,8 @@ var getTodo = (req, res, next)=>{
     return {
         postTodos,
         getTodos,
-        getTodo
+        getTodo,
+        deleteTodo
     };
 })();
 
