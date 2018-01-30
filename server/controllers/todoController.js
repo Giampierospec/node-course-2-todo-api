@@ -1,5 +1,6 @@
 var {TodoUtil} = require('../utils/todoUtil');
 var {ObjectID} = require('mongodb');
+const _ = require('lodash');
 var TodoCtrl = (function(){
     var getTodos = (req, res) =>{
         TodoUtil.getTodos((err, todos)=>{
@@ -47,11 +48,33 @@ var getTodo = (req, res, next)=>{
           res.status(400).send();
     });
 };
+var updateTodo = (req, res, next)=>{
+    var id = req.params.id;
+    var body = _.pick(req.body,['text','completed']);
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send();
+    }
+    if(_.isBoolean(body.completed) && body.completed){
+        body.completedAt = new Date().getTime();
+    }
+    else{
+        body.completed = false;
+        body.completedAt = null;
+    }
+    TodoUtil.updateTodo(id,body,(err, todo)=>{
+        if(err)
+            return res.status(400).send();
+        if(!todo)
+            return res.status(404).send();
+        return res.json({todo});
+    });
+};
     return {
         postTodos,
         getTodos,
         getTodo,
-        deleteTodo
+        deleteTodo,
+        updateTodo
     };
 })();
 

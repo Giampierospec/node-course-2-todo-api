@@ -34,6 +34,12 @@ var TodoUtil = (()=>{
                 callback(err);
             });
     };
+    var updateTodo = (id, body,callback)=>{
+        Todo.findByIdAndUpdate(id,{$set:body},{new:true}).then((todo)=>{
+            callback(null,todo);
+        }).catch((e)=> callback(e));
+
+    };
     var deleteTodo = (id, callback) =>{
         Todo.findByIdAndRemove(id).then((todo)=>{
             callback(null, todo);
@@ -45,7 +51,8 @@ var TodoUtil = (()=>{
         createTodo,
         getTodos,
         findTodo,
-        deleteTodo
+        deleteTodo,
+        updateTodo
     };
 })();
 
