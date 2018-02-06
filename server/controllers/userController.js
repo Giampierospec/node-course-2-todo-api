@@ -11,8 +11,27 @@ var Ctrl = (function(){
               res.header('x-auth',token).send({user});
         })
     };
+    var userMe = (req, res, next)=>{
+        res.json({user:req.user});
+    };
+
+    var authenticate = (req, res, next)=>{
+        var token = req.header('x-auth');
+        UserUtil.getUserMe(token,(err,user)=>{
+            if(err)
+             return res.status(401).send({err});
+             if(!user){
+                return Promise.reject();
+             }
+            req.user = user;
+            req.token = token;
+            next();
+        })
+    };
     return {
-        postUser
+        postUser,
+        userMe,
+        authenticate
     };
 })();
 

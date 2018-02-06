@@ -8,9 +8,8 @@ var UserUtil = (function(){
                 password: body.password
             });
 
-            user.save().then(()=>{
-                return user.generateAuthToken();
-            }).then((token)=>{
+            
+            user.generateAuthToken().then((token)=>{
                 callback(null, user, token);
             }).catch((e)=>callback(e));
         }
@@ -19,8 +18,15 @@ var UserUtil = (function(){
             callback(err);
         }
     };
+    var getUserMe = (token, callback)=>{
+        User.findByToken(token).then((user)=>{
+            console.log(user);
+            callback(null,user);
+        }).catch((e)=> callback(e));
+    };
     return {
-        postUser
+        postUser,
+        getUserMe
     };
 })();
 

@@ -26,7 +26,6 @@ var TodoUtil = (()=>{
             callback(err);
         }
     };
-
     var findTodo = (id, callback)=>{
             Todo.findById(id).then((todo)=>{
                 callback(null,todo);
