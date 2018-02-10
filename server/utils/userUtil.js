@@ -20,7 +20,6 @@ var UserUtil = (function(){
     };
     var getUserMe = (token, callback)=>{
         User.findByToken(token).then((user)=>{
-            console.log(user);
             callback(null,user);
         }).catch((e)=> callback(e));
     };
