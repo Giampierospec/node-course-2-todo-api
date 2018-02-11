@@ -3,7 +3,7 @@ var {ObjectID} = require('mongodb');
 const _ = require('lodash');
 var TodoCtrl = (function(){
     var getTodos = (req, res) =>{
-        TodoUtil.getTodos((err, todos)=>{
+        TodoUtil.getTodos(req.user,(err, todos)=>{
             if(err)
                 res.status(400).send(err);
             else
@@ -11,7 +11,7 @@ var TodoCtrl = (function(){
         });
     };
     var postTodos = (req,res, next)=>{
-       TodoUtil.createTodo(req.body,(err,todo)=>{
+       TodoUtil.createTodo(req.body,req.user,(err,todo)=>{
         if(!err){
             res.json(todo);
         }
@@ -25,7 +25,7 @@ var TodoCtrl = (function(){
         if(!ObjectID.isValid(id)){
             return res.status(404).send();
         }
-        TodoUtil.deleteTodo(id,(err,todo)=>{
+        TodoUtil.deleteTodo(id,req.user,(err,todo)=>{
             if(!todo)
              return res.status(404).send();
              if(err)
@@ -39,7 +39,7 @@ var getTodo = (req, res, next)=>{
         return res.status(404).send();
     }
     
-    TodoUtil.findTodo(id,(err, todo)=>{
+    TodoUtil.findTodo(id,req.user,(err, todo)=>{
         if(!todo)
         res.status(404).send();
         if(todo)
@@ -61,7 +61,7 @@ var updateTodo = (req, res, next)=>{
         body.completed = false;
         body.completedAt = null;
     }
-    TodoUtil.updateTodo(id,body,(err, todo)=>{
+    TodoUtil.updateTodo(id,req.user,body,(err, todo)=>{
         if(err)
             return res.status(400).send();
         if(!todo)

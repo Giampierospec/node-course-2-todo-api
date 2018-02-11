@@ -21,6 +21,8 @@ var UserUtil = (function(){
     };
     var getUserMe = (token, callback)=>{
         User.findByToken(token).then((user)=>{
+            if(!user)
+             return Promise.reject();
             callback(null,user);
         }).catch((e)=> callback(e));
     };

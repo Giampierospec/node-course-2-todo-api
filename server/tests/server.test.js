@@ -174,5 +174,12 @@ describe('POST /users/login', ()=>{
                }).catch((e)=> done(e));
           })
     });
-})
 });
+// describe('DELETE /users/me/token',()=>{
+//     it('should remove auth token on logout',(done)=>{
+//         //DELETE /users/me token
+//         //set x-auth equal to token
+//         //200
+//     });
+// });
+// });

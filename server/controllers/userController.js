@@ -20,6 +20,8 @@ var Ctrl = (function(){
         UserUtil.getUserMe(token,(err,user)=>{
             if(err)
              return res.status(401).send({err});
+             if(!user)
+              return res.status(401).send();
             req.user = user;
             req.token = token;
             next();

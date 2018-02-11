@@ -1,14 +1,15 @@
 var express = require('express');
 var {TodoCtrl} = require('../controllers/todoController');
+var UserCtrl = require('../controllers/userController');
 var todoRoute = express.Router();
 
 
 todoRoute.route('/')
-    .post(TodoCtrl.postTodos)
-    .get(TodoCtrl.getTodos);
+    .post(UserCtrl.authenticate,TodoCtrl.postTodos)
+    .get(UserCtrl.authenticate,TodoCtrl.getTodos);
 todoRoute.route('/:id')
-         .get(TodoCtrl.getTodo)
-         .delete(TodoCtrl.deleteTodo)
-         .patch(TodoCtrl.updateTodo);;
+         .get(UserCtrl.authenticate,TodoCtrl.getTodo)
+         .delete(UserCtrl.authenticate, TodoCtrl.deleteTodo)
+         .patch(UserCtrl.authenticate, TodoCtrl.updateTodo);
 
 module.exports = {todoRoute};
