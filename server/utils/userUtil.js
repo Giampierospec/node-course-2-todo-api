@@ -1,4 +1,5 @@
 var {User} = require('../models/user');
+var bcrypt = require('bcryptjs');
 var UserUtil = (function(){
     var postUser = (body, callback)=>{
         console.log(body);
@@ -23,9 +24,19 @@ var UserUtil = (function(){
             callback(null,user);
         }).catch((e)=> callback(e));
     };
+    var loginUser = (email, password, callback) =>{
+       
+            User.findByCredentials(email, password).then((user)=>{
+                console.log(user);
+                return user.generateAuthToken().then((token)=>{
+                    callback(null, user, token);
+                });
+            }).catch((e)=> callback(e));
+    };
     return {
         postUser,
-        getUserMe
+        getUserMe,
+        loginUser
     };
 })();
 

@@ -5,5 +5,7 @@ router.route('/')
       .post(UserCtrl.postUser);
 router.route('/me')
       .get(UserCtrl.authenticate,UserCtrl.userMe);
+router.route('/login')
+      .post(UserCtrl.login);
 
 module.exports = router;

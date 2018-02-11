@@ -26,12 +26,23 @@ var Ctrl = (function(){
             req.user = user;
             req.token = token;
             next();
-        })
+        });
+    };
+    var login = (req,res, next)=>{
+        UserUtil.loginUser(req.body.email, req.body.password, (err, user, token)=>{
+            console.log(user);
+            if (err)
+                return res.status(400).send({err});
+            else
+                res.header('x-auth', token).send({user});
+        });
+        
     };
     return {
         postUser,
         userMe,
-        authenticate
+        authenticate,
+        login
     };
 })();
 
