@@ -8,4 +8,7 @@ router.route('/me')
 router.route('/login')
       .post(UserCtrl.login);
 
+router.route('/me/token')
+      .delete(UserCtrl.authenticate, UserCtrl.logout);
+
 module.exports = router;

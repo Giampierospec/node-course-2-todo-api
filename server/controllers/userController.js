@@ -20,9 +20,6 @@ var Ctrl = (function(){
         UserUtil.getUserMe(token,(err,user)=>{
             if(err)
              return res.status(401).send({err});
-             if(!user){
-                return Promise.reject();
-             }
             req.user = user;
             req.token = token;
             next();
@@ -38,11 +35,20 @@ var Ctrl = (function(){
         });
         
     };
+    var logout = (req, res)=>{
+        UserUtil.logoutUser(req.user,req.token,(err, user)=>{
+            if(err)
+              return res.status(400).send({err});
+            else
+              res.json({});
+        });
+    };
     return {
         postUser,
         userMe,
         authenticate,
-        login
+        login,
+        logout
     };
 })();
 

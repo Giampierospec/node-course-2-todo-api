@@ -32,10 +32,16 @@ var UserUtil = (function(){
                 });
             }).catch((e)=> callback(e));
     };
+    var logoutUser = (user, token,callback)=>{
+        user.removeToken(token).then(()=>{
+            callback(null,null);
+        }).catch((e)=> callback(e));
+    };
     return {
         postUser,
         getUserMe,
-        loginUser
+        loginUser,
+        logoutUser 
     };
 })();
 
