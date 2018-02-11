@@ -27,7 +27,6 @@ var UserUtil = (function(){
     var loginUser = (email, password, callback) =>{
        
             User.findByCredentials(email, password).then((user)=>{
-                console.log(user);
                 return user.generateAuthToken().then((token)=>{
                     callback(null, user, token);
                 });
