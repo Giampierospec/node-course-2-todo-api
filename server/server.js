@@ -1,24 +1,21 @@
-var env = process.env.NODE_ENV || 'development';
-console.log('env ******', env);
-if(env === 'development'){
-    process.env.PORT = 3000;
-    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp';
-}
-else if(env === 'test'){
-    process.env.PORT = 3000;
-    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest';
-}
+require('./config/config');
 var express = require('express');
 var bodyParser = require('body-parser');
 var {mongoose} = require('./db/mongoose');
 var {todoRoute} = require('./routes/todo');
 var userRoute = require('./routes/user');
-
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var app = express();
 
 
 app.use(bodyParser.json());
-
+app.use(cookieParser());
+app.use(session({
+    secret:"123ABC$",
+    saveUninitialized: true,
+    resave: false
+}));
 app.use("/todos", todoRoute);
 app.use('/users',userRoute);
 var port = process.env.PORT;

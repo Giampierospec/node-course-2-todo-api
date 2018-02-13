@@ -16,7 +16,7 @@ var Ctrl = (function(){
     };
 
     var authenticate = (req, res, next)=>{
-        var token = req.header('x-auth');
+        var token = req.session.token;
         UserUtil.getUserMe(token,(err,user)=>{
             if(err)
              return res.status(401).send({err});
@@ -32,8 +32,11 @@ var Ctrl = (function(){
             console.log(user);
             if (err)
                 return res.status(400).send({err});
-            else
-                res.header('x-auth', token).send({user});
+            else{
+                req.session.token = token;
+                res.header('x-auth', token).send({ user }); 
+
+            }
         });
         
     };
